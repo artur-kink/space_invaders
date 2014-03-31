@@ -4,15 +4,17 @@ game* game::instance = 0;
 
 game::game(){
     instance = this;
-    
-    updateTimer = new Timer();
-	frameRateTimer = new Timer();
+
+    srand (time(NULL));
+
+    updateTimer.reset();
+	frameRateTimer.reset();
 
     // Process program arguments
     Win[0] = 640;
     Win[1] = 480;
 
-    renderStyle = WIREFRAME;
+    renderStyle = MATTE;
 
     ZOOM_SCALE = 1;
 
@@ -29,18 +31,23 @@ game::game(){
     shootDown = false;
     shootTimer.reset();
 
+    particlesSize = 200;
+    particles = new particle*[particlesSize];
+    memset(particles, 0, sizeof(particle*)*particlesSize);
+
     bulletsSize = 15;
     bullets = new bullet*[bulletsSize];
     memset(bullets, 0, sizeof(bullet*)*bulletsSize);
 
-    enemiesSize = 20;
+    enemiesSize = 40;
     enemies = new enemy*[enemiesSize];
 
     for(int i = 0; i < enemiesSize; i++){
         enemies[i] = new enemy();
+        enemies[i]->type = 0;
         // insert math here to space out new enemies
-        enemies[i]->x = (i*6)%60;
-        enemies[i]->y = 30 + ((i*6)/60)*3;
+        enemies[i]->x = -37 + (i*6)%70;
+        enemies[i]->y = 30 + ((i*6)/70)*8;
     }
 
     int argc = 0;
@@ -66,7 +73,7 @@ game::game(){
 }
 
 void game::run(){
-    // Invoke the standard GLUT main event loop
+    //Start glut main loop.
     glutMainLoop();
 }
 
@@ -89,9 +96,9 @@ void game::reshape(int w, int h)
 // display callback
 void game::display(void)
 {
-    //Draw and update 60 frames a second.
-    if(instance->frameRateTimer->elapsed() > 1.0/60.0){
-        instance->frameRateTimer->reset();
+    //Draw and update 60 times a second.
+    if(instance->frameRateTimer.elapsed() > 1.0/60.0){
+        instance->frameRateTimer.reset();
         instance->update();
         instance->draw();
     }
@@ -99,11 +106,13 @@ void game::display(void)
 
 void game::update(){
 
+    //Update player position if moving.
     if(leftDown && p.x > -37)
         p.x -= 1.0f;
     if(rightDown && p.x < 37)
         p.x += 1.0f;
 
+    //Player shoot
     if(shootDown && shootTimer.elapsed() > 1.0/30.0){
         shootTimer.reset();
         for(int i = 0; i < bulletsSize; i++){
@@ -114,30 +123,54 @@ void game::update(){
         }
     }
 
+    //Update enemies.
     for(int i = 0; i < enemiesSize; i++){
         if(enemies[i]){
             enemies[i]->update();
         }
     }
 
+    //Update bullets.
     for(int i = 0; i < bulletsSize; i++){
         if(bullets[i]){
             
             bullets[i]->update();
+            //Destroy bullet if its off map.
             if(bullets[i]->destroy){
                 delete bullets[i];
                 bullets[i] = 0;
                 continue;
             }
-            
+
+            //Get bullet coordinates in positive quadrant.
+            float bx = (bullets[i]->x + 38);
+            float by = (bullets[i]->y + 38);
+
+            //Check for collision with bullets and enemies.
             for(int j = 0; j < enemiesSize; j++){
                 if(enemies[j]){
-                    if(bullets[i]->x < enemies[j]->x + 1 && bullets[i]->x > enemies[j]->x &&
-                        bullets[i]->y < enemies[j]->y + 1 && bullets[i]->y > enemies[j]->y ||
-                        bullets[i]->x + 0.3 < enemies[j]->x + 1 && bullets[i]->x + 0.3 > enemies[j]->x &&
-                        bullets[i]->y + 0.3 < enemies[j]->y + 1 && bullets[i]->y + 0.3 > enemies[j]->y){
+
+                    //Get enemy coordinates in positive quadrant.
+                    float ex1 = (enemies[j]->x - 2 + 38);
+                    float ex2 = (enemies[j]->x + 2 + 38);
+                    float ey1 = (enemies[j]->y - 2 + 38);
+                    float ey2 = (enemies[j]->y + 2 + 38);
+
+                    if(bx > ex1 && bx < ex2 && by > ey1 && by < ey2){
                         delete enemies[j];
                         enemies[j] = 0;
+
+                        //Spawn explosion particles
+                        int spawned = 0;
+                        for(int p = 0; p < particlesSize; p++){
+                            if(particles[p] == 0){
+                                particles[p] = new particle(bullets[i]->x, bullets[i]->y);
+                                spawned++;
+                                if(spawned > 10){
+                                    break;
+                                }
+                            }
+                        }
 
                         delete bullets[i];
                         bullets[i] = 0;
@@ -145,6 +178,16 @@ void game::update(){
                         break;
                     }
                 }
+            }
+        }
+    }
+
+    for(int i = 0; i < particlesSize; i++){
+        if(particles[i]){
+            particles[i]->update();
+            if(particles[i]->destroy){
+                delete particles[i];
+                particles[i] = 0;
             }
         }
     }
@@ -165,6 +208,7 @@ void game::draw(){
     glMaterialfv(GL_FRONT_AND_BACK, GL_SHININESS, blank);
     glShadeModel(GL_SMOOTH);
 
+
     //Setup lighting for shiny and matte.
     if(renderStyle == SHINY){
         glEnable(GL_LIGHTING);
@@ -177,8 +221,8 @@ void game::draw(){
         GLfloat mspecular[] = { 0.2, 0.2, 0.2, 0.2 };
         GLfloat mat_shininess[] = {0.4};
 
-        GLfloat light_position[] = { 15*cos((0/180)*3.14),
-            0,  15*sin((0/180)*3.14), 0.0 };
+        GLfloat light_position[] = { p.x,
+            0,  p.y, 0.0 };
 
         //Set materials and lights
         glMaterialfv(GL_FRONT, GL_SPECULAR, mspecular);
@@ -190,18 +234,19 @@ void game::draw(){
         glLightfv(GL_LIGHT0, GL_DIFFUSE, diffuse);
         glLightfv(GL_LIGHT0, GL_POSITION, light_position);
     }else if(renderStyle == MATTE){
+        glEnable(GL_COLOR_MATERIAL);
         glEnable(GL_LIGHTING);
         glEnable(GL_LIGHT0);
 
         //Setup material and light values.
         GLfloat specular[] = {0.0, 0.0, 0.0};
         GLfloat ambient[] = {0, 0, 0};
-        GLfloat diffuse[] = {0.5, 0.5, 0.5};
+        GLfloat diffuse[] = {0.3, 0.3, 0.3};
         GLfloat mspecular[] = { 0, 0, 0, 0 };
         GLfloat mat_shininess[] = {0};
 
-        GLfloat light_position[] = { 15*cos((0/180)*3.14),
-            0,  15*sin((0/180)*3.14), 0.0 };
+        GLfloat light_position[] = { p.x,
+            p.y, 10, 0 };
 
         //Set materials and lights
         glMaterialfv(GL_FRONT, GL_SPECULAR, mspecular);
@@ -236,6 +281,7 @@ void game::draw(){
 
 	glPushMatrix();
         p.draw();
+        
         for(int i = 0; i < enemiesSize; i++){
             if(enemies[i]){
                 enemies[i]->draw();
@@ -247,13 +293,15 @@ void game::draw(){
                 bullets[i]->draw();
             }
         }
+
+        for(int i = 0; i < particlesSize; i++){
+            if(particles[i]){
+                particles[i]->draw();
+            }
+        }
     glPopMatrix();
-
-    // Execute any GL functions that are in the queue just to be safe
+    
     glFlush();
-
-    // Now, show the frame buffer that we just drew into.
-    // (this prevents flickering).
     glutSwapBuffers();
 }
 

@@ -13,6 +13,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
+#include <cstdlib>
 #include <math.h>
 
 #include "timer.h"
@@ -22,7 +23,7 @@
 #include "bullet.hpp"
 #include "player.hpp"
 #include "enemy.hpp"
-
+#include "particle.hpp"
 
 class game{
 public:
@@ -37,6 +38,9 @@ public:
 
     int bulletsSize;
     bullet** bullets;
+
+    int particlesSize;
+    particle** particles;
 
     bool leftDown;
     bool rightDown;
@@ -55,18 +59,18 @@ public:
     GLdouble FAR_CLIP;
 
     // Render settings
-    enum { WIREFRAME, POINT, SOLID, OUTLINED, SHINY, MATTE };	// README: the different render styles
-    int renderStyle;			// README: the selected render style
+    enum { WIREFRAME, POINT, SOLID, OUTLINED, SHINY, MATTE };
+    int renderStyle;
 
-    // Time settings
-    Timer* updateTimer;
-    Timer* frameRateTimer;
+    // Timers
+    Timer updateTimer;
+    Timer frameRateTimer;
+    Timer lightTimer;
 
     static game* instance;
 
     // Callbacks for handling events in glut
     static void reshape(int w, int h);
-    static void idle(void);
     static void display(void);
 
     static void keyboardUp(unsigned char key, int x, int y);

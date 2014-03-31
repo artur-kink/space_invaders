@@ -49,7 +49,7 @@ PROGRAM	          = game
 CSRCS         =
 
 # Define all C++ source files here
-CPPSRCS       = main.cpp game.cpp draw.cpp player.cpp enemy.cpp bullet.cpp vector.cpp
+CPPSRCS       = main.cpp game.cpp draw.cpp player.cpp enemy.cpp bullet.cpp particle.cpp vector.cpp
 
 ##############################################################################
 # Define additional rules that make should know about in order to compile our
