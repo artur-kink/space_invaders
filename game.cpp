@@ -38,6 +38,7 @@ game::game(){
 
     for(int i = 0; i < enemiesSize; i++){
         enemies[i] = new enemy();
+        // insert math here to space out new enemies
         enemies[i]->x = (i*6)%60;
         enemies[i]->y = 30 + ((i*6)/60)*3;
     }
