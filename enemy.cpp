@@ -6,13 +6,13 @@ enemy::enemy(){
 
 void enemy::update(){
     x += dir*0.5;
-    if(dir > 0 && x > 37){
+    if(dir > 0 && x > 180){
         dir = -1;
-        y -= 3;
+        y -= 24;
     }
-    else if(dir < 0 && x < -37){
+    else if(dir < 0 && x < -180){
         dir = 1;
-        y -= 3;
+        y -= 24;
     }
 }
 
