@@ -11,8 +11,8 @@ game::game(){
 	frameRateTimer.reset();
 
     // Process program arguments
-    Win[0] = 640;
-    Win[1] = 480;
+    Win[0] = 800;
+    Win[1] = 600;
 
     renderStyle = MATTE;
 
@@ -35,17 +35,35 @@ game::game(){
     particles = new particle*[particlesSize];
     memset(particles, 0, sizeof(particle*)*particlesSize);
 
-    bulletsSize = 15;
+    bulletsSize = 55;
     bullets = new bullet*[bulletsSize];
     memset(bullets, 0, sizeof(bullet*)*bulletsSize);
 
-    enemiesSize = 40;
+    enemiesSize = 105;
     enemies = new enemy*[enemiesSize];
 
     for(int i = 0; i < enemiesSize; i++){
-        enemies[i] = new enemy(-37 + (i*6)%70, 10 + ((i*6)/70)*8, ((i*6)/70)%3);
-        if(enemies[i]->type == 1){
+        enemies[i] = new enemy(-37 + (i*6)%70, 10 + ((i*6)/70)*3, ((i*6)/70)%3);
+        
+        if(((i*6)/70)%2 == 1)
+            enemies[i]->dir = -1;
+        
+        if(((i*6)/70) == 1){
             enemies[i]->c = blue;
+        }else if(((i*6)/70) == 2){
+            enemies[i]->c = teal;
+        }else if(((i*6)/70) == 3){
+            enemies[i]->c = green;
+        }else if(((i*6)/70) == 4){
+            enemies[i]->c = lime;
+        }else if(((i*6)/70) == 5){
+            enemies[i]->c = yellow;
+        }else if(((i*6)/70) == 6){
+            enemies[i]->c = brown;
+        }else if(((i*6)/70) == 7){
+            enemies[i]->c = orange;
+        }else if(((i*6)/70) == 8){
+            enemies[i]->c = red;
         }
     }
 
@@ -112,7 +130,7 @@ void game::update(){
         p.x += 1.0f;
 
     //Player shoot
-    if(shootDown && shootTimer.elapsed() > 1.0/30.0){
+    if(shootDown && shootTimer.elapsed() > 1.0/2.0){
         shootTimer.reset();
         for(int i = 0; i < bulletsSize; i++){
             if(bullets[i] == 0){
@@ -128,10 +146,12 @@ void game::update(){
             enemies[i]->update();
 
             //Shoot
-            for(int b = 0; b < bulletsSize; b++){
-                if(bullets[b] == 0){
-                    bullets[b] = new bullet(enemies[i]->x, enemies[i]->y, -1.0);
-                    break;
+            if(rand()%1000 == 0){
+                for(int b = 0; b < bulletsSize; b++){
+                    if(bullets[b] == 0){
+                        bullets[b] = new bullet(enemies[i]->x, enemies[i]->y, -1.0);
+                        break;
+                    }
                 }
             }
         }
