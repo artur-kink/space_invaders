@@ -16,7 +16,7 @@ void bullet::update(){
 void bullet::draw(){
     glPushMatrix();
         glTranslatef(x, y, 0);
-        glColor3f(0.8f, 0.2f, 0.2f);
+        glColor3f(1.0f, 0.0f, 0.0f);
         draw::sphere(0.3f);
     glPopMatrix();
 }

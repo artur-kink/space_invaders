@@ -6,7 +6,8 @@ particle::particle(float x, float y){
 
     xVelocity = (float)((rand() % 10) - 5)/10.0;
     yVelocity = (float)((rand() % 10) - 5)/10.0;
-    rotationVelocity = (float)(rand() % 10)/10.0;
+    rotationVelocity = (float)(rand() % 10)/5.0;
+    rotationVelocity *= 3.0f;
 
     r = (float)(rand() % 10) / 10.0;
     g = (float)(rand() % 10) / 10.0;
@@ -24,14 +25,14 @@ void particle::update(){
     x += xVelocity;
     y += yVelocity;
     rotation += rotationVelocity;
-    if(lifeTimer.elapsed() > 1){
+    if(lifeTimer.elapsed() > 2){
         destroy = true;
     }
 }
 
 void particle::draw(){
     glPushMatrix();
-        glColor4f(r*(1 - lifeTimer.elapsed()), g*(1 - lifeTimer.elapsed()), 0, 0.0);
+        glColor3f(r*(2 - lifeTimer.elapsed()), g*(2 - lifeTimer.elapsed()), 0);
         glTranslatef(x, y, 0);
         glScalef(0.2, 0.2, 0.2);
         glRotatef(rotation, rotation, rotation, 0);

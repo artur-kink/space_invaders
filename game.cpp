@@ -43,11 +43,10 @@ game::game(){
     enemies = new enemy*[enemiesSize];
 
     for(int i = 0; i < enemiesSize; i++){
-        enemies[i] = new enemy();
-        enemies[i]->type = 0;
-        // insert math here to space out new enemies
-        enemies[i]->x = -37 + (i*6)%70;
-        enemies[i]->y = 30 + ((i*6)/70)*8;
+        enemies[i] = new enemy(-37 + (i*6)%70, 10 + ((i*6)/70)*8, ((i*6)/70)%3);
+        if(enemies[i]->type == 1){
+            enemies[i]->c = blue;
+        }
     }
 
     int argc = 0;
@@ -127,6 +126,14 @@ void game::update(){
     for(int i = 0; i < enemiesSize; i++){
         if(enemies[i]){
             enemies[i]->update();
+
+            //Shoot
+            for(int b = 0; b < bulletsSize; b++){
+                if(bullets[b] == 0){
+                    bullets[b] = new bullet(enemies[i]->x, enemies[i]->y, -1.0);
+                    break;
+                }
+            }
         }
     }
 
@@ -147,36 +154,48 @@ void game::update(){
             float by = (bullets[i]->y + 38);
 
             //Check for collision with bullets and enemies.
-            for(int j = 0; j < enemiesSize; j++){
-                if(enemies[j]){
+            if(bullets[i]->dir > 0){
+                for(int j = 0; j < enemiesSize; j++){
+                    if(enemies[j]){
 
-                    //Get enemy coordinates in positive quadrant.
-                    float ex1 = (enemies[j]->x - 2 + 38);
-                    float ex2 = (enemies[j]->x + 2 + 38);
-                    float ey1 = (enemies[j]->y - 2 + 38);
-                    float ey2 = (enemies[j]->y + 2 + 38);
+                        //Get enemy coordinates in positive quadrant.
+                        float ex1 = (enemies[j]->x - 2 + 38);
+                        float ex2 = (enemies[j]->x + 2 + 38);
+                        float ey1 = (enemies[j]->y - 2 + 38);
+                        float ey2 = (enemies[j]->y + 2 + 38);
 
-                    if(bx > ex1 && bx < ex2 && by > ey1 && by < ey2){
-                        delete enemies[j];
-                        enemies[j] = 0;
+                        if(bx > ex1 && bx < ex2 && by > ey1 && by < ey2){
+                            delete enemies[j];
+                            enemies[j] = 0;
 
-                        //Spawn explosion particles
-                        int spawned = 0;
-                        for(int p = 0; p < particlesSize; p++){
-                            if(particles[p] == 0){
-                                particles[p] = new particle(bullets[i]->x, bullets[i]->y);
-                                spawned++;
-                                if(spawned > 10){
-                                    break;
+                            //Spawn explosion particles
+                            int spawned = 0;
+                            for(int p = 0; p < particlesSize; p++){
+                                if(particles[p] == 0){
+                                    particles[p] = new particle(bullets[i]->x, bullets[i]->y);
+                                    spawned++;
+                                    if(spawned > 10){
+                                        break;
+                                    }
                                 }
                             }
+
+                            bullets[i]->destroy = true;
+                            break;
                         }
-
-                        delete bullets[i];
-                        bullets[i] = 0;
-
-                        break;
                     }
+                }
+            }else{
+                //Check for collision with player.
+                //Get enemy coordinates in positive quadrant.
+                float px1 = (p.x - 1 + 38);
+                float px2 = (p.x + 1 + 38);
+                float py1 = (p.y - 1 + 38);
+                float py2 = (p.y + 1 + 38);
+                if(bx > px1 && bx < px2 && by > py1 && by < py2){
+                    //Kill Player.
+
+                    bullets[i]->destroy = true;
                 }
             }
         }
