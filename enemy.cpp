@@ -20,51 +20,51 @@ void enemy::update(){
 
 void enemy::draw(){
 	
-	if(animationTimer.elapsed() > 1.0){
+	if(animationTimer.elapsed() > 0.4){
 		animationTimer.reset();
 		frame = !frame;
 	}
 	if(frame){
 		// left side
 		glPushMatrix();
-			glTranslatef(x-10/5.0, y-2/5.0, 0);
+			glTranslatef(x - 10 / 5.0, y - 2 / 5.0, 0);
 			glScalef(0.2, 0.6, 1);
 			glColor3f(1.0f, 0, 0);
 			draw::cube();
 		glPopMatrix();
 		glPushMatrix();
-			glTranslatef(x-8/5.0, y+1/5.0, 0);
+			glTranslatef(x - 8 / 5.0, y + 1 / 5.0, 0);
 			glScalef(0.2, 0.4, 1);
 			glColor3f(1.0f, 0, 0);
 			draw::cube();
 		glPopMatrix();
 		glPushMatrix();
-			glTranslatef(x-6/5.0, y, 0);
+			glTranslatef(x - 6 / 5.0, y, 0);
 			glScalef(0.2, 1.0, 1);
 			glColor3f(1.0f, 0, 0);
 			draw::cube();
 		glPopMatrix();
 		glPushMatrix();
-			glTranslatef(x-6/5.0, y+8/5.0, 0);
+			glTranslatef(x - 6 / 5.0, y + 8 / 5.0, 0);
 			glScalef(0.2, 0.2, 1);
 			glColor3f(1.0f, 0, 0);
 			draw::cube();
 		glPopMatrix();
 		glPushMatrix();
-			glTranslatef(x-4/5.0, y, 0);
+			glTranslatef(x - 4 / 5.0, y, 0);
 			glScalef(0.2, 0.2, 1);
 			glColor3f(1.0f, 0, 0);
 			draw::cube();
 		glPopMatrix();
 		glPushMatrix();
-			glTranslatef(x-4/5.0, y+5/5.0, 0);
+			glTranslatef(x - 4 / 5.0, y + 5 / 5.0, 0);
 			glScalef(0.2, 0.4, 1);
 			glColor3f(1.0f, 0, 0);
 			draw::cube();
 		glPopMatrix();
 		// body
 		glPushMatrix();
-			glTranslatef(x, y+1/5.0, 0);
+			glTranslatef(x, y + 1 / 5.0, 0);
 			glScalef(0.6, 0.8, 1);
 			glColor3f(1.0f, 0, 0);
 			draw::cube();
@@ -72,67 +72,164 @@ void enemy::draw(){
 		
 		// right side
 		glPushMatrix();
-			glTranslatef(x+10/5.0, y-2.0/5.0, 0);
+			glTranslatef(x + 10 / 5.0, y - 2 / 5.0, 0);
 			glScalef(0.2, 0.6, 1);
 			glColor3f(1.0f, 0, 0);
 			draw::cube();
 		glPopMatrix();
 		glPushMatrix();
-			glTranslatef(x+8/5.0, y+1/5.0, 0);
+			glTranslatef(x + 8 / 5.0, y + 1 / 5.0, 0);
 			glScalef(0.2, 0.4, 1);
 			glColor3f(1.0f, 0, 0);
 			draw::cube();
 		glPopMatrix();
 		glPushMatrix();
-			glTranslatef(x+6/5.0, y, 0);
+			glTranslatef(x + 6 / 5.0, y, 0);
 			glScalef(0.2, 1.0, 1);
 			glColor3f(1.0f, 0, 0);
 			draw::cube();
 		glPopMatrix();
 		glPushMatrix();
-			glTranslatef(x+6/5.0, y+8/5.0, 0);
+			glTranslatef(x + 6 / 5.0, y + 8 / 5.0, 0);
 			glScalef(0.2, 0.2, 1);
 			glColor3f(1.0f, 0, 0);
 			draw::cube();
 		glPopMatrix();
 		glPushMatrix();
-			glTranslatef(x+4/5.0, y, 0);
+			glTranslatef(x + 4 / 5.0, y, 0);
 			glScalef(0.2, 0.2, 1);
 			glColor3f(1.0f, 0, 0);
 			draw::cube();
 		glPopMatrix();
 		glPushMatrix();
-			glTranslatef(x+4/5.0, y+5/5.0, 0);
+			glTranslatef(x + 4 / 5.0, y + 5 / 5.0, 0);
 			glScalef(0.2, 0.4, 1);
 			glColor3f(1.0f, 0, 0);
 			draw::cube();
 		glPopMatrix();
 		
 		glPushMatrix();
-			glTranslatef(x-3/5.0, y-6/5.0, 0);
+			glTranslatef(x - 3 / 5.0, y - 6 / 5.0, 0);
 			glScalef(0.4, 0.2, 1);
 			glColor3f(1.0f, 0, 0);
 			draw::cube();
 		glPopMatrix();
 		glPushMatrix();
-			glTranslatef(x+3/5.0, y-6/5.0, 0);
+			glTranslatef(x + 3 / 5.0, y - 6 / 5.0, 0);
 			glScalef(0.4, 0.2, 1);
+			glColor3f(1.0f, 0, 0);
+			draw::cube();
+		glPopMatrix();
+	}
+	else {
+		// Left side
+		glPushMatrix();
+			glTranslatef(x - 10 / 5.0, y + 3 / 5.0, 0);
+			glScalef(0.2, 0.8, 0.2);
+			glColor3f(1.0f, 0, 0);
+			draw::cube();
+		glPopMatrix();
+		glPushMatrix();
+			glTranslatef(x - 8 / 5.0, y, 0);
+			glScalef(0.2, 0.6, 0.2);
+			glColor3f(1.0f, 0, 0);
+			draw::cube();
+		glPopMatrix();
+		glPushMatrix();
+			glTranslatef(x - 8 / 5.0, y - 6 / 5.0, 0);
+			glScalef(0.2, 0.2, 0.2);
+			glColor3f(1.0f, 0, 0);
+			draw::cube();
+		glPopMatrix();
+		glPushMatrix();
+			glTranslatef(x - 6 / 5.0, y, 0);
+			glScalef(0.2, 1.0, 0.2);
+			glColor3f(1.0f, 0, 0);
+			draw::cube();
+		glPopMatrix();
+		glPushMatrix();
+			glTranslatef(x - 6 / 5.0, y + 8 / 5.0, 0);
+			glScalef(0.2, 0.2, 0.2);
+			glColor3f(1.0f, 0, 0);
+			draw::cube();
+		glPopMatrix();
+		glPushMatrix();
+			glTranslatef(x - 4 / 5.0, y - 1 / 5.0, 0);
+			glScalef(0.2, 0.4, 0.2);
+			glColor3f(1.0f, 0, 0);
+			draw::cube();
+		glPopMatrix();
+		glPushMatrix();
+			glTranslatef(x - 4 / 5.0, y + 5 / 5.0, 0);
+			glScalef(0.2, 0.4, 0.2);
 			glColor3f(1.0f, 0, 0);
 			draw::cube();
 		glPopMatrix();
 		
-		// Eyes
+		// body
 		glPushMatrix();
-			glTranslatef(x-4/5.0, y+2/5.0, 0);
-			glScalef(0.2, 0.2, 1);
-			glColor3f(0, 0, 0);
+			glTranslatef(x, y + 1 / 5.0, 0);
+			glScalef(0.6, 0.8, 0.2);
+			glColor3f(1.0f, 0, 0);
+			draw::cube();
+		glPopMatrix();
+		
+		// Right side
+		glPushMatrix();
+			glTranslatef(x + 10 / 5.0, y + 3 / 5.0, 0);
+			glScalef(0.2, 0.4, 0.2);
+			glColor3f(1.0f, 0, 0);
 			draw::cube();
 		glPopMatrix();
 		glPushMatrix();
-			glTranslatef(x+4/5.0, y+2/5.0, 0);
-			glScalef(0.2, 0.2, 1);
-			glColor3f(0, 0, 0);
+			glTranslatef(x + 8 / 5.0, y, 0);
+			glScalef(0.2, 0.6, 0.2);
+			glColor3f(1.0f, 0, 0);
+			draw::cube();
+		glPopMatrix();
+		glPushMatrix();
+			glTranslatef(x + 8 / 5.0, y - 6 / 5.0, 0);
+			glScalef(0.2, 0.2, 0.2);
+			glColor3f(1.0f, 0, 0);
+			draw::cube();
+		glPopMatrix();
+		glPushMatrix();
+			glTranslatef(x + 6 / 5.0, y, 0);
+			glScalef(0.2, 1.0, 0.2);
+			glColor3f(1.0f, 0, 0);
+			draw::cube();
+		glPopMatrix();
+		glPushMatrix();
+			glTranslatef(x + 6 / 5.0, y + 8 / 5.0, 0);
+			glScalef(0.2, 0.2, 0.2);
+			glColor3f(1.0f, 0, 0);
+			draw::cube();
+		glPopMatrix();
+		glPushMatrix();
+			glTranslatef(x + 4 / 5.0, y - 1 / 5.0, 0);
+			glScalef(0.2, 0.4, 0.2);
+			glColor3f(1.0f, 0, 0);
+			draw::cube();
+		glPopMatrix();
+		glPushMatrix();
+			glTranslatef(x + 4 / 5.0, y + 5 / 5.0, 0);
+			glScalef(0.2, 0.4, 0.2);
+			glColor3f(1.0f, 0, 0);
 			draw::cube();
 		glPopMatrix();
 	}
+	
+	// Eyes
+	glPushMatrix();
+		glTranslatef(x - 4 / 5.0, y + 2 / 5.0, 0);
+		glScalef(0.2, 0.2, 0.2);
+		glColor3f(0, 0, 0);
+		draw::cube();
+	glPopMatrix();
+	glPushMatrix();
+		glTranslatef(x + 4 / 5.0, y + 2 / 5.0, 0);
+		glScalef(0.2, 0.2, 0.2);
+		glColor3f(0, 0, 0);
+		draw::cube();
+	glPopMatrix();
 }
