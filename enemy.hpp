@@ -11,6 +11,7 @@ public:
 	bool frame;
 
     float dir;
+    int type;
 
     enemy();
 
