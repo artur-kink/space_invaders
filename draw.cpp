@@ -68,5 +68,5 @@ void draw::sphere(float r){
 }
 
 void draw::text(const unsigned char* string){
-    glutStrokeString(GLUT_STROKE_ROMAN, string);
+    glutStrokeString(GLUT_STROKE_MONO_ROMAN, string);
 }

@@ -31,6 +31,8 @@ game::game(){
     shootDown = false;
     shootTimer.reset();
 
+    score = 0;
+
     particlesSize = 200;
     particles = new particle*[particlesSize];
     memset(particles, 0, sizeof(particle*)*particlesSize);
@@ -187,7 +189,8 @@ void game::update(){
                         if(bx > ex1 && bx < ex2 && by > ey1 && by < ey2){
                             delete enemies[j];
                             enemies[j] = 0;
-
+                            score += 10;
+                            
                             //Spawn explosion particles
                             int spawned = 0;
                             for(int p = 0; p < particlesSize; p++){
@@ -319,12 +322,6 @@ void game::draw(){
 
 
 	glPushMatrix();
-
-        glPushMatrix();
-        glColor3f(1.0f, 1.0f, 0);
-        glScalef(0.1f, 0.1f, 0.1f);
-        draw::text((unsigned char*)"test");
-        glPopMatrix();
         p.draw();
         
         for(int i = 0; i < enemiesSize; i++){
@@ -345,6 +342,26 @@ void game::draw(){
             }
         }
     glPopMatrix();
+
+
+    //Disable lighting for text rendering.
+    glDisable(GL_LIGHTING);
+    glDisable(GL_LIGHT0);
+    glDisable(GL_COLOR_MATERIAL);
+    
+    glPushMatrix();
+
+        glColor3f(1.0f, 1.0f, 1.0f);
+        glTranslatef(-34, 24, 5);
+        glScalef(0.01f, 0.01f, 0.01f);
+
+        char scoreText[100];
+        scoreText[0] = 0;
+        sprintf(scoreText, "Score: %d", score);
+
+        draw::text((unsigned char*)scoreText);
+    glPopMatrix();
+
     
     glFlush();
     glutSwapBuffers();

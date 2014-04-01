@@ -10,6 +10,7 @@ public:
     color(const color& c);
 };
 
+static color white(1.0, 1.0, 1.0);
 static color magenta(1.0, 0, 1.0);
 static color blue(0.0, 42.0/255.0, 1.0);
 static color teal(0.0, 195.0/255.0, 1.0);

@@ -32,7 +32,9 @@ public:
     int Win[2];					// window (x,y) size
 
     player p;
-    
+
+    int score;
+
     int enemiesSize;
     enemy** enemies;
 
