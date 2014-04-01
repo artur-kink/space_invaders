@@ -40,7 +40,7 @@ void enemy::drawEnemy0() {
 		glColor3f(c.r, c.g, c.b);
 		draw::cube();
 	glPopMatrix();
-	glPushMatrix();
+		glPushMatrix();
 		glTranslatef(x - 8 / 5.0, y + 1 / 5.0, 0);
 		glScalef(0.2, 0.4, 0.6);
 		glColor3f(c.r, c.g, c.b);
@@ -59,8 +59,8 @@ void enemy::drawEnemy0() {
 		draw::cube();
 	glPopMatrix();
 	glPushMatrix();
-		glTranslatef(x - 4 / 5.0, y, 0);
-		glScalef(0.2, 0.2, 1);
+		glTranslatef(x - 4 / 5.0, y - 1 / 5.0, 0);
+		glScalef(0.2, 0.4, 0.6);
 		glColor3f(c.r, c.g, c.b);
 		draw::cube();
 	glPopMatrix();
@@ -70,6 +70,7 @@ void enemy::drawEnemy0() {
 		glColor3f(c.r, c.g, c.b);
 		draw::cube();
 	glPopMatrix();
+	
 	// body
 	glPushMatrix();
 		glTranslatef(x, y + 1 / 5.0, 0);
@@ -77,7 +78,7 @@ void enemy::drawEnemy0() {
 		glColor3f(c.r, c.g, c.b);
 		draw::cube();
 	glPopMatrix();
-			
+
 	// right side
 	glPushMatrix();
 		glTranslatef(x + 10 / 5.0, y - 2 / 5.0, 0);
@@ -104,8 +105,8 @@ void enemy::drawEnemy0() {
 		draw::cube();
 	glPopMatrix();
 	glPushMatrix();
-		glTranslatef(x + 4 / 5.0, y, 0);
-		glScalef(0.2, 0.2, 0.6);
+		glTranslatef(x + 4 / 5.0, y - 1 / 5.0, 0);
+		glScalef(0.2, 0.4, 0.6);
 		glColor3f(c.r, c.g, c.b);
 		draw::cube();
 	glPopMatrix();
@@ -115,7 +116,7 @@ void enemy::drawEnemy0() {
 		glColor3f(c.r, c.g, c.b);
 		draw::cube();
 	glPopMatrix();
-	
+
 	glPushMatrix();
 		glTranslatef(x - 3 / 5.0, y - 6 / 5.0, 0);
 		glScalef(0.4, 0.2, 0.6);
@@ -128,7 +129,7 @@ void enemy::drawEnemy0() {
 		glColor3f(c.r, c.g, c.b);
 		draw::cube();
 	glPopMatrix();
-	
+
 	// Eyes
 	glPushMatrix();
 		glTranslatef(x - 4 / 5.0, y + 2 / 5.0, 0);
@@ -821,13 +822,13 @@ void enemy::drawEnemy3() {
 	glPushMatrix();
 		glTranslatef(x - 3 / 5.0, y + 2 / 5.0, 0);
 		glScalef(0.2, 0.2, 0.6);
-		glColor3f(c.r, c.g, c.b);
+		glColor3f(0, 0, 0);
 		draw::cube();
 	glPopMatrix();
 	glPushMatrix();
 		glTranslatef(x + 3 / 5.0, y + 2 / 5.0, 0);
 		glScalef(0.2, 0.2, 0.6);
-		glColor3f(c.r, c.g, c.b);
+		glColor3f(0, 0, 0);
 		draw::cube();
 	glPopMatrix();
 }
@@ -919,13 +920,13 @@ void enemy::drawEnemy3B() {
 	glPushMatrix();
 		glTranslatef(x - 3 / 5.0, y, 0);
 		glScalef(0.2, 0.2, 0.6);
-		glColor3f(c.r, c.g, c.b);
+		glColor3f(0, 0, 0);
 		draw::cube();
 	glPopMatrix();
 	glPushMatrix();
 		glTranslatef(x + 3 / 5.0, y, 0);
 		glScalef(0.2, 0.2, 0.6);
-		glColor3f(c.r, c.g, c.b);
+		glColor3f(0, 0, 0);
 		draw::cube();
 	glPopMatrix();
 }
@@ -944,7 +945,7 @@ void enemy::drawEnemy4() {
 		draw::cube();
 	glPopMatrix();
 	glPushMatrix();
-		glTranslatef(x - 6 / 5.0, y - 2 / 5.0, 0);
+		glTranslatef(x - 6 / 5.0, y - 4 / 5.0, 0);
 		glScalef(0.2, 0.4, 0.6);
 		glColor3f(c.r, c.g, c.b);
 		draw::cube();
@@ -994,7 +995,7 @@ void enemy::drawEnemy4() {
 		draw::cube();
 	glPopMatrix();
 	glPushMatrix();
-		glTranslatef(x + 6 / 5.0, y - 2 / 5.0, 0);
+		glTranslatef(x + 6 / 5.0, y - 4 / 5.0, 0);
 		glScalef(0.2, 0.4, 0.6);
 		glColor3f(c.r, c.g, c.b);
 		draw::cube();
@@ -1023,10 +1024,380 @@ void enemy::drawEnemy4() {
 		glColor3f(c.r, c.g, c.b);
 		draw::cube();
 	glPopMatrix();
+	
+	// Eyes
+	glPushMatrix();
+		glTranslatef(x - 2 / 5.0, y + 2 / 5.0, 0);
+		glScalef(0.2, 0.4, 0.6);
+		glColor3f(0, 0, 0);
+		draw::cube();
+	glPopMatrix();
+	glPushMatrix();
+		glTranslatef(x + 2 / 5.0, y + 2 / 5.0, 0);
+		glScalef(0.2, 0.4, 0.6);
+		glColor3f(0, 0, 0);
+		draw::cube();
+	glPopMatrix();
 }
 
 void enemy::drawEnemy4B() {
+	// left side
+	glPushMatrix();
+		glTranslatef(x - 6 / 5.0, y + 7 / 5.0, 0);
+		glScalef(0.2, 0.2, 0.6);
+		glColor3f(c.r, c.g, c.b);
+		draw::cube();
+	glPopMatrix();
+	glPushMatrix();
+		glTranslatef(x - 6 / 5.0, y + 2 / 5.0, 0);
+		glScalef(0.2, 0.4, 0.6);
+		glColor3f(c.r, c.g, c.b);
+		draw::cube();
+	glPopMatrix();
+	glPushMatrix();
+		glTranslatef(x - 6 / 5.0, y - 7 / 5.0, 0);
+		glScalef(0.2, 0.2, 0.6);
+		glColor3f(c.r, c.g, c.b);
+		draw::cube();
+	glPopMatrix();
+	glPushMatrix();
+		glTranslatef(x - 4 / 5.0, y + 2 / 5.0, 0);
+		glScalef(0.2, 0.8, 0.6);
+		glColor3f(c.r, c.g, c.b);
+		draw::cube();
+	glPopMatrix();
+	glPushMatrix();
+		glTranslatef(x - 4 / 5.0, y - 5 / 5.0, 0);
+		glScalef(0.2, 0.2, 0.6);
+		glColor3f(c.r, c.g, c.b);
+		draw::cube();
+	glPopMatrix();
+	glPushMatrix();
+		glTranslatef(x - 2 / 5.0, y - 2 / 5.0, 0);
+		glScalef(0.2, 0.4, 0.6);
+		glColor3f(c.r, c.g, c.b);
+		draw::cube();
+	glPopMatrix();
+	glPushMatrix();
+		glTranslatef(x - 2 / 5.0, y + 5 / 5.0, 0);
+		glScalef(0.2, 0.2, 0.6);
+		glColor3f(c.r, c.g, c.b);
+		draw::cube();
+	glPopMatrix();
 	
+	// body
+	glPushMatrix();
+		glTranslatef(x, y + 2 / 5.0, 0);
+		glScalef(0.2, 0.8, 0.6);
+		glColor3f(c.r, c.g, c.b);
+		draw::cube();
+	glPopMatrix();
+	
+	// right side
+	glPushMatrix();
+		glTranslatef(x + 6 / 5.0, y + 7 / 5.0, 0);
+		glScalef(0.2, 0.2, 0.6);
+		glColor3f(c.r, c.g, c.b);
+		draw::cube();
+	glPopMatrix();
+	glPushMatrix();
+		glTranslatef(x + 6 / 5.0, y + 2 / 5.0, 0);
+		glScalef(0.2, 0.4, 0.6);
+		glColor3f(c.r, c.g, c.b);
+		draw::cube();
+	glPopMatrix();
+	glPushMatrix();
+		glTranslatef(x + 6 / 5.0, y - 7 / 5.0, 0);
+		glScalef(0.2, 0.2, 0.6);
+		glColor3f(c.r, c.g, c.b);
+		draw::cube();
+	glPopMatrix();
+	glPushMatrix();
+		glTranslatef(x + 4 / 5.0, y + 2 / 5.0, 0);
+		glScalef(0.2, 0.8, 0.6);
+		glColor3f(c.r, c.g, c.b);
+		draw::cube();
+	glPopMatrix();
+	glPushMatrix();
+		glTranslatef(x + 4 / 5.0, y - 5 / 5.0, 0);
+		glScalef(0.2, 0.2, 0.6);
+		glColor3f(c.r, c.g, c.b);
+		draw::cube();
+	glPopMatrix();
+	glPushMatrix();
+		glTranslatef(x + 2 / 5.0, y - 2 / 5.0, 0);
+		glScalef(0.2, 0.4, 0.6);
+		glColor3f(c.r, c.g, c.b);
+		draw::cube();
+	glPopMatrix();
+	glPushMatrix();
+		glTranslatef(x + 2 / 5.0, y + 5 / 5.0, 0);
+		glScalef(0.2, 0.2, 0.6);
+		glColor3f(c.r, c.g, c.b);
+		draw::cube();
+	glPopMatrix();
+	
+	// Eyes
+	glPushMatrix();
+		glTranslatef(x - 2 / 5.0, y + 2 / 5.0, 0);
+		glScalef(0.2, 0.4, 0.6);
+		glColor3f(0, 0, 0);
+		draw::cube();
+	glPopMatrix();
+	glPushMatrix();
+		glTranslatef(x + 2 / 5.0, y + 2 / 5.0, 0);
+		glScalef(0.2, 0.4, 0.6);
+		glColor3f(0, 0, 0);
+		draw::cube();
+	glPopMatrix();
+}
+
+void enemy::drawEnemy5() {
+	// left side
+	glPushMatrix();
+		glTranslatef(x - 8 / 5.0, y + 1 / 5.0, 0);
+		glScalef(0.2, 0.4, 0.6);
+		glColor3f(c.r, c.g, c.b);
+		draw::cube();
+	glPopMatrix();
+	glPushMatrix();
+		glTranslatef(x - 8 / 5.0, y - 7 / 5.0, 0);
+		glScalef(0.2, 0.2, 0.6);
+		glColor3f(c.r, c.g, c.b);
+		draw::cube();
+	glPopMatrix();
+	glPushMatrix();
+		glTranslatef(x - 6 / 5.0, y + 3 / 5.0, 0);
+		glScalef(0.2, 0.6, 0.6);
+		glColor3f(c.r, c.g, c.b);
+		draw::cube();
+	glPopMatrix();
+	glPushMatrix();
+		glTranslatef(x - 6 / 5.0, y - 5 / 5.0, 0);
+		glScalef(0.2, 0.2, 0.6);
+		glColor3f(c.r, c.g, c.b);
+		draw::cube();
+	glPopMatrix();
+	glPushMatrix();
+		glTranslatef(x - 3 / 5.0, y + 6 / 5.0, 0);
+		glScalef(0.4, 0.4, 0.6);
+		glColor3f(c.r, c.g, c.b);
+		draw::cube();
+	glPopMatrix();
+	glPushMatrix();
+		glTranslatef(x - 4 / 5.0, y + 1 / 5.0, 0);
+		glScalef(0.2, 0.2, 0.6);
+		glColor3f(c.r, c.g, c.b);
+		draw::cube();
+	glPopMatrix();
+	glPushMatrix();
+		glTranslatef(x - 4 / 5.0, y - 3 / 5.0, 0);
+		glScalef(0.2, 0.2, 0.6);
+		glColor3f(c.r, c.g, c.b);
+		draw::cube();
+	glPopMatrix();
+	glPushMatrix();
+		glTranslatef(x - 2 / 5.0, y, 0);
+		glScalef(0.2, 0.4, 0.6);
+		glColor3f(c.r, c.g, c.b);
+		draw::cube();
+	glPopMatrix();
+	
+	// body
+	glPushMatrix();
+		glTranslatef(x, y + 1.5 / 5.0, 0);
+		glScalef(0.2, 1.2, 0.6);
+		glColor3f(c.r, c.g, c.b);
+		draw::cube();
+	glPopMatrix();
+	
+	// right side
+	glPushMatrix();
+		glTranslatef(x + 8 / 5.0, y + 1 / 5.0, 0);
+		glScalef(0.2, 0.4, 0.6);
+		glColor3f(c.r, c.g, c.b);
+		draw::cube();
+	glPopMatrix();
+	glPushMatrix();
+		glTranslatef(x + 8 / 5.0, y - 7 / 5.0, 0);
+		glScalef(0.2, 0.2, 0.6);
+		glColor3f(c.r, c.g, c.b);
+		draw::cube();
+	glPopMatrix();
+	glPushMatrix();
+		glTranslatef(x + 6 / 5.0, y + 3 / 5.0, 0);
+		glScalef(0.2, 0.6, 0.6);
+		glColor3f(c.r, c.g, c.b);
+		draw::cube();
+	glPopMatrix();
+	glPushMatrix();
+		glTranslatef(x + 6 / 5.0, y - 5 / 5.0, 0);
+		glScalef(0.2, 0.2, 0.6);
+		glColor3f(c.r, c.g, c.b);
+		draw::cube();
+	glPopMatrix();
+	glPushMatrix();
+		glTranslatef(x + 3 / 5.0, y + 6 / 5.0, 0);
+		glScalef(0.4, 0.4, 0.6);
+		glColor3f(c.r, c.g, c.b);
+		draw::cube();
+	glPopMatrix();
+	glPushMatrix();
+		glTranslatef(x + 4 / 5.0, y + 1 / 5.0, 0);
+		glScalef(0.2, 0.2, 0.6);
+		glColor3f(c.r, c.g, c.b);
+		draw::cube();
+	glPopMatrix();
+	glPushMatrix();
+		glTranslatef(x + 4 / 5.0, y - 3 / 5.0, 0);
+		glScalef(0.2, 0.2, 0.6);
+		glColor3f(c.r, c.g, c.b);
+		draw::cube();
+	glPopMatrix();
+	glPushMatrix();
+		glTranslatef(x + 2 / 5.0, y, 0);
+		glScalef(0.2, 0.4, 0.6);
+		glColor3f(c.r, c.g, c.b);
+		draw::cube();
+	glPopMatrix();
+	
+	// Eyes
+	glPushMatrix();
+		glTranslatef(x - 3 / 5.0, y + 3 / 5.0, 0);
+		glScalef(0.4, 0.2, 0.6);
+		glColor3f(0, 0, 0);
+		draw::cube();
+	glPopMatrix();
+	glPushMatrix();
+		glTranslatef(x + 3 / 5.0, y + 3 / 5.0, 0);
+		glScalef(0.4, 0.2, 0.6);
+		glColor3f(0, 0, 0);
+		draw::cube();
+	glPopMatrix();
+}
+
+void enemy::drawEnemy5B() {
+	// left side
+	glPushMatrix();
+		glTranslatef(x - 8 / 5.0, y + 1 / 5.0, 0);
+		glScalef(0.2, 0.4, 0.6);
+		glColor3f(c.r, c.g, c.b);
+		draw::cube();
+	glPopMatrix();
+	glPushMatrix();
+		glTranslatef(x - 6 / 5.0, y + 3 / 5.0, 0);
+		glScalef(0.2, 0.6, 0.6);
+		glColor3f(c.r, c.g, c.b);
+		draw::cube();
+	glPopMatrix();
+	glPushMatrix();
+		glTranslatef(x - 6 / 5.0, y - 5 / 5.0, 0);
+		glScalef(0.2, 0.2, 0.6);
+		glColor3f(c.r, c.g, c.b);
+		draw::cube();
+	glPopMatrix();
+	glPushMatrix();
+		glTranslatef(x - 3 / 5.0, y + 6 / 5.0, 0);
+		glScalef(0.4, 0.4, 0.6);
+		glColor3f(c.r, c.g, c.b);
+		draw::cube();
+	glPopMatrix();
+	glPushMatrix();
+		glTranslatef(x - 3 / 5.0, y - 8 / 5.0, 0);
+		glScalef(0.4, 0.2, 0.6);
+		glColor3f(c.r, c.g, c.b);
+		draw::cube();
+	glPopMatrix();
+	glPushMatrix();
+		glTranslatef(x - 4 / 5.0, y + 1 / 5.0, 0);
+		glScalef(0.2, 0.2, 0.6);
+		glColor3f(c.r, c.g, c.b);
+		draw::cube();
+	glPopMatrix();
+	glPushMatrix();
+		glTranslatef(x - 4 / 5.0, y - 3 / 5.0, 0);
+		glScalef(0.2, 0.2, 0.6);
+		glColor3f(c.r, c.g, c.b);
+		draw::cube();
+	glPopMatrix();
+	glPushMatrix();
+		glTranslatef(x - 2 / 5.0, y, 0);
+		glScalef(0.2, 0.4, 0.6);
+		glColor3f(c.r, c.g, c.b);
+		draw::cube();
+	glPopMatrix();
+	
+	// body
+	glPushMatrix();
+		glTranslatef(x, y + 1.5 / 5.0, 0);
+		glScalef(0.2, 1.2, 0.6);
+		glColor3f(c.r, c.g, c.b);
+		draw::cube();
+	glPopMatrix();
+	
+	// right side
+	glPushMatrix();
+		glTranslatef(x + 8 / 5.0, y + 1 / 5.0, 0);
+		glScalef(0.2, 0.4, 0.6);
+		glColor3f(c.r, c.g, c.b);
+		draw::cube();
+	glPopMatrix();
+	glPushMatrix();
+		glTranslatef(x + 6 / 5.0, y + 3 / 5.0, 0);
+		glScalef(0.2, 0.6, 0.6);
+		glColor3f(c.r, c.g, c.b);
+		draw::cube();
+	glPopMatrix();
+	glPushMatrix();
+		glTranslatef(x + 6 / 5.0, y - 5 / 5.0, 0);
+		glScalef(0.2, 0.2, 0.6);
+		glColor3f(c.r, c.g, c.b);
+		draw::cube();
+	glPopMatrix();
+	glPushMatrix();
+		glTranslatef(x + 3 / 5.0, y + 6 / 5.0, 0);
+		glScalef(0.4, 0.4, 0.6);
+		glColor3f(c.r, c.g, c.b);
+		draw::cube();
+	glPopMatrix();
+	glPushMatrix();
+		glTranslatef(x + 3 / 5.0, y - 8 / 5.0, 0);
+		glScalef(0.4, 0.2, 0.6);
+		glColor3f(c.r, c.g, c.b);
+		draw::cube();
+	glPopMatrix();
+	glPushMatrix();
+		glTranslatef(x + 4 / 5.0, y + 1 / 5.0, 0);
+		glScalef(0.2, 0.2, 0.6);
+		glColor3f(c.r, c.g, c.b);
+		draw::cube();
+	glPopMatrix();
+	glPushMatrix();
+		glTranslatef(x + 4 / 5.0, y - 3 / 5.0, 0);
+		glScalef(0.2, 0.2, 0.6);
+		glColor3f(c.r, c.g, c.b);
+		draw::cube();
+	glPopMatrix();
+	glPushMatrix();
+		glTranslatef(x + 2 / 5.0, y, 0);
+		glScalef(0.2, 0.4, 0.6);
+		glColor3f(c.r, c.g, c.b);
+		draw::cube();
+	glPopMatrix();
+	
+	// Eyes
+	glPushMatrix();
+		glTranslatef(x - 3 / 5.0, y + 3 / 5.0, 0);
+		glScalef(0.4, 0.2, 0.6);
+		glColor3f(0, 0, 0);
+		draw::cube();
+	glPopMatrix();
+	glPushMatrix();
+		glTranslatef(x + 3 / 5.0, y + 3 / 5.0, 0);
+		glScalef(0.4, 0.2, 0.6);
+		glColor3f(0, 0, 0);
+		draw::cube();
+	glPopMatrix();
 }
 
 void enemy::draw(){
@@ -1053,6 +1424,8 @@ void enemy::draw(){
 			drawEnemy3();
 		else if (type == 4)
 			drawEnemy4();
+		else if (type == 5)
+			drawEnemy5();
 	}
 	else {
 		// Enemy type 0
@@ -1064,5 +1437,9 @@ void enemy::draw(){
 			drawEnemy2B();
         else if (type == 3)
 			drawEnemy3B();
+		else if (type == 4)
+			drawEnemy4B();
+		else if (type == 5)
+			drawEnemy5B();
 	}
 }

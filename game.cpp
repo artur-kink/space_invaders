@@ -253,7 +253,7 @@ void game::setLevel(int l){
     enemies = new enemy*[enemiesSize];
 
     for(int i = 0; i < enemiesSize; i++){
-        enemies[i] = new enemy(-37 + (i*6)%70, 10 + ((i*6)/70)*3, ((i*6)/70)%5);
+        enemies[i] = new enemy(-37 + (i*6)%70, 10 + ((i*6)/70)*3, ((i*6)/70)%6);
 
         if(((i*6)/70)%2 == 1)
             enemies[i]->dir = -1;
