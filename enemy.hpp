@@ -21,6 +21,17 @@ public:
     enemy(float x, float y, int t);
 
     void update();
+    void drawEnemy0();
+    void drawEnemy1();
+    void drawEnemy2();
+    void drawEnemy3();
+    void drawEnemy4();
+    
+    void drawEnemy0B();
+    void drawEnemy1B();
+    void drawEnemy2B();
+    void drawEnemy3B();
+    void drawEnemy4B();
     virtual void draw();
 };
 
