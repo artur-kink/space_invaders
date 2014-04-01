@@ -9,7 +9,7 @@ bullet::bullet(float x, float y, float d){
 
 void bullet::update(){
     y+= dir*0.5f;
-    if(y > 30 || y < -30)
+    if(y > 28 || y < -28)
         destroy = true;
 }
 

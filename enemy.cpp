@@ -29,7 +29,10 @@ void enemy::update(){
 }
 
 void enemy::draw(){
-	
+
+    if(y > 28)
+        return;
+
 	if(animationTimer.elapsed() > 0.4){
 		animationTimer.reset();
 		frame = !frame;

@@ -34,7 +34,7 @@ game::game(){
     score = 0;
     level = 0;
     
-    particlesSize = 200;
+    particlesSize = 100;
     particles = new particle*[particlesSize];
     memset(particles, 0, sizeof(particle*)*particlesSize);
 
