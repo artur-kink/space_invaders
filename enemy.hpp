@@ -26,12 +26,16 @@ public:
     void drawEnemy2();
     void drawEnemy3();
     void drawEnemy4();
+    void drawEnemy5();
+    void drawEnemy6();
     
     void drawEnemy0B();
     void drawEnemy1B();
     void drawEnemy2B();
     void drawEnemy3B();
     void drawEnemy4B();
+    void drawEnemy5B();
+    void drawEnemy6B();
     virtual void draw();
 };
 
