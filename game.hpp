@@ -65,7 +65,11 @@ public:
     enum { WIREFRAME, POINT, SOLID, OUTLINED, SHINY, MATTE };
     int renderStyle;
 
+    enum { START, GAME, LEVEL, GAME_OVER };
+    int screen;
+
     // Timers
+    Timer sceneTimer;
     Timer updateTimer;
     Timer frameRateTimer;
     Timer lightTimer;
@@ -82,6 +86,7 @@ public:
     game();
     void run();
 
+    void setScreen(int s);
     void setLevel(int l);
     void update();
     void draw();

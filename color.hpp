@@ -20,5 +20,6 @@ static color yellow(1.0, 1.0, 0.0);
 static color brown(1.0, 200.00/255.0, 0.0);
 static color orange(1.0, 95.00/255.0, 0.0);
 static color red(1.0, 0.0, 0.0);
+static color purple(0.6, 0.0, 0.6);
 
 #endif

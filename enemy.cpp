@@ -3,6 +3,7 @@
 enemy::enemy(){
     dir = 1;
     c = magenta;
+    type = 0;
     animationTimer.reset();
 }
 
@@ -724,8 +725,7 @@ void enemy::draw(){
 				draw::cube();
 			glPopMatrix();
 		}
-	}
-	else if (type == 3) {
+        else if (type == 3) {
 			glPushMatrix();
 				glTranslatef(x - 9 / 5.0, y - 2 / 5.0, 0);
 				glScalef(0.2, 0.6, 0.6);

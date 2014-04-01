@@ -15,6 +15,7 @@ game::game(){
     Win[1] = 600;
 
     renderStyle = MATTE;
+    screen = START;
 
     ZOOM_SCALE = 1;
 
@@ -101,112 +102,115 @@ void game::display(void)
 
 void game::update(){
 
-    //Update player position if moving.
-    if(leftDown && p.x > -37)
-        p.x -= 1.0f;
-    if(rightDown && p.x < 37)
-        p.x += 1.0f;
+    if(screen == START){
+        
+    }else if(screen == GAME){
+        //Update player position if moving.
+        if(leftDown && p.x > -37)
+            p.x -= 1.0f;
+        if(rightDown && p.x < 37)
+            p.x += 1.0f;
 
-    //Player shoot
-    if(shootDown && shootTimer.elapsed() > 1.0/2.0){
-        for(int i = 0; i < bulletsSize; i++){
-            if(bullets[i] == 0){
-                shootTimer.reset();
-                bullets[i] = new bullet(p.x, p.y, 1);
-                break;
-            }
-        }
-    }
-
-
-    bool allDead = true;
-    //Update enemies.
-    for(int i = 0; i < enemiesSize; i++){
-        if(enemies[i]){
-            allDead = false;
-            enemies[i]->update();
-
-            //Shoot
-            if(rand()%1000 <= level){
-                for(int b = 0; b < bulletsSize; b++){
-                    if(bullets[b] == 0){
-                        bullets[b] = new bullet(enemies[i]->x, enemies[i]->y, -1.0);
-                        break;
-                    }
+        //Player shoot
+        if(shootDown && shootTimer.elapsed() > 1.0/2.0){
+            for(int i = 0; i < bulletsSize; i++){
+                if(bullets[i] == 0){
+                    shootTimer.reset();
+                    bullets[i] = new bullet(p.x, p.y, 1);
+                    break;
                 }
             }
         }
-    }
 
-    if(allDead){
-        setLevel(level+1);
-    }
 
-    //Update bullets.
-    for(int i = 0; i < bulletsSize; i++){
-        if(bullets[i]){
-            
-            bullets[i]->update();
-            //Destroy bullet if its off map.
-            if(bullets[i]->destroy){
-                delete bullets[i];
-                bullets[i] = 0;
-                continue;
-            }
+        bool allDead = true;
+        //Update enemies.
+        for(int i = 0; i < enemiesSize; i++){
+            if(enemies[i]){
+                allDead = false;
+                enemies[i]->update();
 
-            //Get bullet coordinates in positive quadrant.
-            float bx = (bullets[i]->x + 38);
-            float by = (bullets[i]->y + 38);
-
-            //Check for collision with bullets and enemies.
-            if(bullets[i]->dir > 0){
-                for(int j = 0; j < enemiesSize; j++){
-                    if(enemies[j]){
-
-                        //Get enemy coordinates in positive quadrant.
-                        float ex1 = (enemies[j]->x - 2 + 38);
-                        float ex2 = (enemies[j]->x + 2 + 38);
-                        float ey1 = (enemies[j]->y - 2 + 38);
-                        float ey2 = (enemies[j]->y + 2 + 38);
-
-                        if(bx > ex1 && bx < ex2 && by > ey1 && by < ey2){
-                            delete enemies[j];
-                            enemies[j] = 0;
-                            score += 10;
-                            
-                            //Spawn explosion particles
-                            int spawned = 0;
-                            for(int p = 0; p < particlesSize; p++){
-                                if(particles[p] == 0){
-                                    particles[p] = new particle(bullets[i]->x, bullets[i]->y);
-                                    spawned++;
-                                    if(spawned > 10){
-                                        break;
-                                    }
-                                }
-                            }
-
-                            bullets[i]->destroy = true;
+                //Shoot
+                if(rand()%1000 <= level){
+                    for(int b = 0; b < bulletsSize; b++){
+                        if(bullets[b] == 0){
+                            bullets[b] = new bullet(enemies[i]->x, enemies[i]->y, -1.0);
                             break;
                         }
                     }
                 }
-            }else{
-                //Check for collision with player.
-                //Get enemy coordinates in positive quadrant.
-                float px1 = (p.x - 1 + 38);
-                float px2 = (p.x + 1 + 38);
-                float py1 = (p.y - 1 + 38);
-                float py2 = (p.y + 1 + 38);
-                if(bx > px1 && bx < px2 && by > py1 && by < py2){
-                    //Kill Player.
+            }
+        }
 
-                    bullets[i]->destroy = true;
+        if(allDead){
+            setLevel(level+1);
+        }
+
+        //Update bullets.
+        for(int i = 0; i < bulletsSize; i++){
+            if(bullets[i]){
+
+                bullets[i]->update();
+                //Destroy bullet if its off map.
+                if(bullets[i]->destroy){
+                    delete bullets[i];
+                    bullets[i] = 0;
+                    continue;
+                }
+
+                //Get bullet coordinates in positive quadrant.
+                float bx = (bullets[i]->x + 38);
+                float by = (bullets[i]->y + 38);
+
+                //Check for collision with bullets and enemies.
+                if(bullets[i]->dir > 0){
+                    for(int j = 0; j < enemiesSize; j++){
+                        if(enemies[j]){
+
+                            //Get enemy coordinates in positive quadrant.
+                            float ex1 = (enemies[j]->x - 2 + 38);
+                            float ex2 = (enemies[j]->x + 2 + 38);
+                            float ey1 = (enemies[j]->y - 2 + 38);
+                            float ey2 = (enemies[j]->y + 2 + 38);
+
+                            if(bx > ex1 && bx < ex2 && by > ey1 && by < ey2){
+                                delete enemies[j];
+                                enemies[j] = 0;
+                                score += 10;
+
+                                //Spawn explosion particles
+                                int spawned = 0;
+                                for(int p = 0; p < particlesSize; p++){
+                                    if(particles[p] == 0){
+                                        particles[p] = new particle(bullets[i]->x, bullets[i]->y);
+                                        spawned++;
+                                        if(spawned > 10){
+                                            break;
+                                        }
+                                    }
+                                }
+
+                                bullets[i]->destroy = true;
+                                break;
+                            }
+                        }
+                    }
+                }else{
+                    //Check for collision with player.
+                    //Get enemy coordinates in positive quadrant.
+                    float px1 = (p.x - 1 + 38);
+                    float px2 = (p.x + 1 + 38);
+                    float py1 = (p.y - 1 + 38);
+                    float py2 = (p.y + 1 + 38);
+                    if(bx > px1 && bx < px2 && by > py1 && by < py2){
+                        //Kill Player.
+                        setScreen(GAME_OVER);
+                        bullets[i]->destroy = true;
+                    }
                 }
             }
         }
     }
-
     for(int i = 0; i < particlesSize; i++){
         if(particles[i]){
             particles[i]->update();
@@ -216,12 +220,31 @@ void game::update(){
             }
         }
     }
+}
 
+void game::setScreen(int s){
+    if(sceneTimer.elapsed() > 0.5){
+        screen = s;
+        sceneTimer.reset();
+    }
 }
 
 void game::setLevel(int l){
     level = l;
-    
+
+    if(level != 0){
+        setScreen(LEVEL);
+    }else{
+        score = 0;
+    }
+
+    for(int i = 0; i < bulletsSize; i++){
+        if(bullets[i]){
+            delete bullets[i];
+            bullets[i] = 0;
+        }
+    }
+
     enemiesSize = 105 + l*10;
     if(enemies){
         delete enemies;
@@ -230,27 +253,29 @@ void game::setLevel(int l){
     enemies = new enemy*[enemiesSize];
 
     for(int i = 0; i < enemiesSize; i++){
-        enemies[i] = new enemy(-37 + (i*6)%70, 10 + ((i*6)/70)*3, ((i*6)/70)%3);
+        enemies[i] = new enemy(-37 + (i*6)%70, 10 + ((i*6)/70)*3, ((i*6)/70)%5);
 
         if(((i*6)/70)%2 == 1)
             enemies[i]->dir = -1;
 
-        if(((i*6)/70)%9 == 1){
+        if(((i*6)/70)%10 == 1){
             enemies[i]->c = blue;
-        }else if(((i*6)/70)%9 == 2){
+        }else if(((i*6)/70)%10 == 2){
             enemies[i]->c = teal;
         }else if(((i*6)/70)%9 == 3){
             enemies[i]->c = green;
-        }else if(((i*6)/70)%9 == 4){
+        }else if(((i*6)/70)%10 == 4){
             enemies[i]->c = lime;
-        }else if(((i*6)/70)%9 == 5){
+        }else if(((i*6)/70)%10 == 5){
             enemies[i]->c = yellow;
-        }else if(((i*6)/70)%9 == 6){
+        }else if(((i*6)/70)%10 == 6){
             enemies[i]->c = brown;
-        }else if(((i*6)/70)%9 == 7){
+        }else if(((i*6)/70)%10 == 7){
             enemies[i]->c = orange;
-        }else if(((i*6)/70)%9 == 8){
+        }else if(((i*6)/70)%10 == 8){
             enemies[i]->c = red;
+        }else if(((i*6)/70)%10 == 9){
+            enemies[i]->c = purple;
         }
     }
 }
@@ -367,9 +392,39 @@ void game::draw(){
     glDisable(GL_LIGHTING);
     glDisable(GL_LIGHT0);
     glDisable(GL_COLOR_MATERIAL);
-    
-    glPushMatrix();
 
+    if(screen == START){
+    glPushMatrix();
+        glColor3f(1.0f, 1.0f, 1.0f);
+        glTranslatef(-20, 0, 5);
+        glScalef(0.04f, 0.04f, 0.04f);
+
+        draw::text((unsigned char*)"START GAME");
+    glPopMatrix();
+    }else if(screen == GAME_OVER){
+    glPushMatrix();
+        glColor3f(1.0f, 1.0f, 1.0f);
+        glTranslatef(-19, 0, 5);
+        glScalef(0.04f, 0.04f, 0.04f);
+
+        draw::text((unsigned char*)"GAME OVER");
+    glPopMatrix();
+    }else if(screen == LEVEL){
+    glPushMatrix();
+        glColor3f(1.0f, 1.0f, 1.0f);
+        glTranslatef(-14, 0, 5);
+        glScalef(0.04f, 0.04f, 0.04f);
+
+        char levelText[100];
+        levelText[0] = 0;
+        sprintf(levelText, "Level %d", level+1);
+
+        draw::text((unsigned char*)levelText);
+    glPopMatrix();
+    }
+
+    if(screen == GAME || screen == LEVEL || screen == GAME_OVER){
+    glPushMatrix();
         glColor3f(1.0f, 1.0f, 1.0f);
         glTranslatef(-34, 24, 5);
         glScalef(0.01f, 0.01f, 0.01f);
@@ -380,6 +435,7 @@ void game::draw(){
 
         draw::text((unsigned char*)scoreText);
     glPopMatrix();
+    }
 
     
     glFlush();
@@ -401,15 +457,24 @@ void game::keyboardUp(unsigned char key, int x, int y){
 }
 
 void game::keyboardDown(unsigned char key, int x, int y){
-    switch(key){
-        case 'a':
-            instance->leftDown = true;
-            break;
-        case 'd':
-            instance->rightDown = true;
-            break;
-        case 'w':
-            instance->shootDown = true;
-            break;
+    if(instance->screen == START){
+        instance->setScreen(game::GAME);
+    }else if(instance->screen == GAME_OVER){
+        instance->setLevel(0);
+        instance->setScreen(game::START);
+    }else if(instance->screen == LEVEL){
+        instance->setScreen(game::GAME);
+    }else{
+        switch(key){
+            case 'a':
+                instance->leftDown = true;
+                break;
+            case 'd':
+                instance->rightDown = true;
+                break;
+            case 'w':
+                instance->shootDown = true;
+                break;
+        }
     }
 }
