@@ -3,6 +3,7 @@
 
 #include <GL/gl.h>
 #include <GL/glu.h>
+#include <GL/freeglut.h>
 
 class draw{
 public:    
@@ -13,6 +14,8 @@ public:
     static void cylinder(float r, float zDepth);
 
     static void sphere(float r);
+
+    static void text(const unsigned char* string);
 };
 
 #endif

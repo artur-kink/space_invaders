@@ -8,8 +8,8 @@
 
 class particle{
 public:
-    float x, y;
-    float xVelocity, yVelocity;
+    float x, y, z;
+    float xVelocity, yVelocity, zVelocity;
 
     float rotation;
     float rotationVelocity;

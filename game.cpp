@@ -319,6 +319,12 @@ void game::draw(){
 
 
 	glPushMatrix();
+
+        glPushMatrix();
+        glColor3f(1.0f, 1.0f, 0);
+        glScalef(0.1f, 0.1f, 0.1f);
+        draw::text((unsigned char*)"test");
+        glPopMatrix();
         p.draw();
         
         for(int i = 0; i < enemiesSize; i++){

@@ -66,3 +66,7 @@ void draw::sphere(float r){
     quadratic = gluNewQuadric();
     gluSphere(quadratic, r , 12, 12);
 }
+
+void draw::text(const unsigned char* string){
+    glutStrokeString(GLUT_STROKE_ROMAN, string);
+}
