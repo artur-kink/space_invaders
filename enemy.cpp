@@ -7,7 +7,7 @@ enemy::enemy(){
     animationTimer.reset();
 }
 
-enemy::enemy(float x, float y, int t){
+enemy::enemy(float x, float y, int t, int level){
     this->x = x;
     this->y = y;
     type = t;
@@ -18,10 +18,12 @@ enemy::enemy(float x, float y, int t){
 
     h = 2;
     w = 2;
+
+    velocity = 0.2f + level*0.05;
 }
 
 void enemy::update(){
-    x += dir*0.2;
+    x += dir*velocity;
     if(dir > 0 && x > 37){
         dir = -1;
         y -= 3;

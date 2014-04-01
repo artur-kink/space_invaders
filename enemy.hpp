@@ -17,8 +17,10 @@ public:
     //Enemy color.
     color c;
 
+    float velocity;
+
     enemy();
-    enemy(float x, float y, int t);
+    enemy(float x, float y, int t, int level);
 
     void update();
     void drawEnemy0();
