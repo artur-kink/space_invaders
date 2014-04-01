@@ -32,7 +32,8 @@ game::game(){
     shootTimer.reset();
 
     score = 0;
-
+    level = 0;
+    
     particlesSize = 200;
     particles = new particle*[particlesSize];
     memset(particles, 0, sizeof(particle*)*particlesSize);
@@ -41,34 +42,9 @@ game::game(){
     bullets = new bullet*[bulletsSize];
     memset(bullets, 0, sizeof(bullet*)*bulletsSize);
 
-    enemiesSize = 105;
-    enemies = new enemy*[enemiesSize];
-
-    for(int i = 0; i < enemiesSize; i++){
-        enemies[i] = new enemy(-37 + (i*6)%70, 10 + ((i*6)/70)*3, ((i*6)/70)%3);
-        
-        if(((i*6)/70)%2 == 1)
-            enemies[i]->dir = -1;
-        
-        if(((i*6)/70) == 1){
-            enemies[i]->c = blue;
-        }else if(((i*6)/70) == 2){
-            enemies[i]->c = teal;
-        }else if(((i*6)/70) == 3){
-            enemies[i]->c = green;
-        }else if(((i*6)/70) == 4){
-            enemies[i]->c = lime;
-        }else if(((i*6)/70) == 5){
-            enemies[i]->c = yellow;
-        }else if(((i*6)/70) == 6){
-            enemies[i]->c = brown;
-        }else if(((i*6)/70) == 7){
-            enemies[i]->c = orange;
-        }else if(((i*6)/70) == 8){
-            enemies[i]->c = red;
-        }
-    }
-
+    enemies = 0;
+    setLevel(0);
+    
     int argc = 0;
     glutInit(&argc, 0);
     // Set video mode: double-buffered, color, depth-buffered
@@ -133,22 +109,25 @@ void game::update(){
 
     //Player shoot
     if(shootDown && shootTimer.elapsed() > 1.0/2.0){
-        shootTimer.reset();
         for(int i = 0; i < bulletsSize; i++){
             if(bullets[i] == 0){
+                shootTimer.reset();
                 bullets[i] = new bullet(p.x, p.y, 1);
                 break;
             }
         }
     }
 
+
+    bool allDead = true;
     //Update enemies.
     for(int i = 0; i < enemiesSize; i++){
         if(enemies[i]){
+            allDead = false;
             enemies[i]->update();
 
             //Shoot
-            if(rand()%1000 == 0){
+            if(rand()%1000 <= level){
                 for(int b = 0; b < bulletsSize; b++){
                     if(bullets[b] == 0){
                         bullets[b] = new bullet(enemies[i]->x, enemies[i]->y, -1.0);
@@ -157,6 +136,10 @@ void game::update(){
                 }
             }
         }
+    }
+
+    if(allDead){
+        setLevel(level+1);
     }
 
     //Update bullets.
@@ -234,6 +217,42 @@ void game::update(){
         }
     }
 
+}
+
+void game::setLevel(int l){
+    level = l;
+    
+    enemiesSize = 105 + l*10;
+    if(enemies){
+        delete enemies;
+    }
+    
+    enemies = new enemy*[enemiesSize];
+
+    for(int i = 0; i < enemiesSize; i++){
+        enemies[i] = new enemy(-37 + (i*6)%70, 10 + ((i*6)/70)*3, ((i*6)/70)%3);
+
+        if(((i*6)/70)%2 == 1)
+            enemies[i]->dir = -1;
+
+        if(((i*6)/70)%9 == 1){
+            enemies[i]->c = blue;
+        }else if(((i*6)/70)%9 == 2){
+            enemies[i]->c = teal;
+        }else if(((i*6)/70)%9 == 3){
+            enemies[i]->c = green;
+        }else if(((i*6)/70)%9 == 4){
+            enemies[i]->c = lime;
+        }else if(((i*6)/70)%9 == 5){
+            enemies[i]->c = yellow;
+        }else if(((i*6)/70)%9 == 6){
+            enemies[i]->c = brown;
+        }else if(((i*6)/70)%9 == 7){
+            enemies[i]->c = orange;
+        }else if(((i*6)/70)%9 == 8){
+            enemies[i]->c = red;
+        }
+    }
 }
 
 void game::draw(){

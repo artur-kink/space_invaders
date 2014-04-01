@@ -34,6 +34,7 @@ public:
     player p;
 
     int score;
+    int level;
 
     int enemiesSize;
     enemy** enemies;
@@ -81,6 +82,7 @@ public:
     game();
     void run();
 
+    void setLevel(int l);
     void update();
     void draw();
 };
