@@ -15,6 +15,9 @@ enemy::enemy(float x, float y, int t){
     dir = 1;
     c = magenta;
     animationTimer.reset();
+
+    h = 2;
+    w = 2;
 }
 
 void enemy::update(){

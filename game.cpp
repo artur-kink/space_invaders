@@ -168,10 +168,10 @@ void game::update(){
                         if(enemies[j]){
 
                             //Get enemy coordinates in positive quadrant.
-                            float ex1 = (enemies[j]->x - 2 + 38);
-                            float ex2 = (enemies[j]->x + 2 + 38);
-                            float ey1 = (enemies[j]->y - 2 + 38);
-                            float ey2 = (enemies[j]->y + 2 + 38);
+                            float ex1 = (enemies[j]->x - enemies[j]->w + 38);
+                            float ex2 = (enemies[j]->x + enemies[j]->w  + 38);
+                            float ey1 = (enemies[j]->y - enemies[j]->h  + 38);
+                            float ey2 = (enemies[j]->y + enemies[j]->h  + 38);
 
                             if(bx > ex1 && bx < ex2 && by > ey1 && by < ey2){
                                 delete enemies[j];
@@ -198,10 +198,10 @@ void game::update(){
                 }else{
                     //Check for collision with player.
                     //Get enemy coordinates in positive quadrant.
-                    float px1 = (p.x - 1 + 38);
-                    float px2 = (p.x + 1 + 38);
-                    float py1 = (p.y - 1 + 38);
-                    float py2 = (p.y + 1 + 38);
+                    float px1 = (p.x - p.w + 38);
+                    float px2 = (p.x + p.w + 38);
+                    float py1 = (p.y - p.h + 38);
+                    float py2 = (p.y + p.h + 38);
                     if(bx > px1 && bx < px2 && by > py1 && by < py2){
                         //Kill Player.
                         setScreen(GAME_OVER);

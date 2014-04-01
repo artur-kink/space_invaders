@@ -9,6 +9,9 @@ public:
     float x;
     float y;
 
+    float w;
+    float h;
+
     virtual void draw() = 0;
 };
 

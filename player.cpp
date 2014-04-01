@@ -3,6 +3,9 @@
 player::player(){
     y = -25;
     x = 0;
+
+    w = 2.5;
+    h = 2;
 }
 
 void player::draw(){
