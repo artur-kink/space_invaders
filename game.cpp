@@ -130,11 +130,12 @@ void game::update(){
                 allDead = false;
                 enemies[i]->update();
 
+                //Check if enemy reached bottom of screen
                 if(enemies[i]->y <= p.y + p.h)
                     setScreen(GAME_OVER);
 
-                //Shoot
-                if((float)rand()/(float)0xFFFFFFFF <= 0.0003*(level+1)){
+                //Shoot based on random probability
+                if((float)rand()/(float)0xFFFFFFFF <= 0.0002 + 0.0001*(level+1)){
                     for(int b = 0; b < bulletsSize; b++){
                         if(bullets[b] == 0){
                             bullets[b] = new bullet(enemies[i]->x, enemies[i]->y, -1.0);

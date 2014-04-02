@@ -16,7 +16,10 @@ void bullet::update(){
 void bullet::draw(){
     glPushMatrix();
         glTranslatef(x, y, 0);
-        glColor3f(1.0f, 1.0f, 1.0f);
+        if(dir < 0)
+            glColor3f(1.0f, 0.0f, 0.0f);
+        else
+            glColor3f(1.0f, 1.0f, 1.0f);
         draw::sphere(0.4f);
     glPopMatrix();
 }
