@@ -7,6 +7,13 @@ enemy::enemy(){
     animationTimer.reset();
 }
 
+// Each enemy has an animation. It animates between the two pictures.
+// http://fontvir.us/x/invaders.gif
+// The alien at the top left is enemy0. On the right of it is it's 
+// animation, enemy0B. The third alien is enemy1, and on the right of it
+// is enemy1B. This pattern continues until the 6th alien, which is
+// enemy5.
+
 enemy::enemy(float x, float y, int t, int level){
     this->x = x;
     this->y = y;
@@ -25,6 +32,7 @@ enemy::enemy(float x, float y, int t, int level){
     beenHit = false;
 }
 
+// enemy movement
 void enemy::update(){
 
     x += dir*velocity;
@@ -59,6 +67,7 @@ void enemy::draw(){
 
     glPushMatrix();
     
+    // animation, if we need to switch between models or not
 	if(frame){
 		// Enemy type 0
 		if (type == 0)
@@ -94,6 +103,10 @@ void enemy::draw(){
     glPopMatrix();
 }
 
+// Enemies were drawn from the left to the middle, then the middle was
+// drawn. The right side is a copy of the left side, except with the
+// x values changed to positive. Eyes were drawn last. This style was
+// used to draw all the aliens.
 void enemy::drawEnemy0() {
 	// left side
 	glPushMatrix();
