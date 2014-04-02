@@ -130,8 +130,27 @@ void game::update(){
                 allDead = false;
                 enemies[i]->update();
 
+                if(enemies[i]->beenHit && enemies[i]->deathTimer.elapsed() > 1){
+                    //Spawn explosion particles
+                    int spawned = 0;
+                    for(int p = 0; p < particlesSize; p++){
+                        if(particles[p] == 0){
+                            particles[p] = new particle(enemies[i]->x, enemies[i]->y);
+                            spawned++;
+                            if(spawned > 10){
+                                break;
+                            }
+                        }
+                    }
+                    
+                    delete enemies[i];
+                    enemies[i] = 0;
+                    
+                    continue;
+                }
+
                 //Shoot
-                if(rand()%1000 <= level){
+                if(rand()%1200 <= level){
                     for(int b = 0; b < bulletsSize; b++){
                         if(bullets[b] == 0){
                             bullets[b] = new bullet(enemies[i]->x, enemies[i]->y, -1.0);
@@ -174,21 +193,8 @@ void game::update(){
                             float ey2 = (enemies[j]->y + enemies[j]->h  + 38);
 
                             if(bx > ex1 && bx < ex2 && by > ey1 && by < ey2){
-                                delete enemies[j];
-                                enemies[j] = 0;
+                                enemies[j]->hit();
                                 score += 10;
-
-                                //Spawn explosion particles
-                                int spawned = 0;
-                                for(int p = 0; p < particlesSize; p++){
-                                    if(particles[p] == 0){
-                                        particles[p] = new particle(bullets[i]->x, bullets[i]->y);
-                                        spawned++;
-                                        if(spawned > 10){
-                                            break;
-                                        }
-                                    }
-                                }
 
                                 bullets[i]->destroy = true;
                                 break;
@@ -205,12 +211,26 @@ void game::update(){
                     if(bx > px1 && bx < px2 && by > py1 && by < py2){
                         //Kill Player.
                         setScreen(GAME_OVER);
+
+                        //Spawn explosion particles
+                        int spawned = 0;
+                        for(int p = 0; p < particlesSize; p++){
+                            if(particles[p] == 0){
+                                particles[p] = new particle(bullets[i]->x, bullets[i]->y);
+                                spawned++;
+                                if(spawned > 30){
+                                    break;
+                                }
+                            }
+                        }
+
                         bullets[i]->destroy = true;
                     }
                 }
             }
         }
     }
+    
     for(int i = 0; i < particlesSize; i++){
         if(particles[i]){
             particles[i]->update();
@@ -366,7 +386,9 @@ void game::draw(){
 
 
 	glPushMatrix();
-        p.draw();
+        if(screen != GAME_OVER){
+            p.draw();
+        }
         
         for(int i = 0; i < enemiesSize; i++){
             if(enemies[i]){

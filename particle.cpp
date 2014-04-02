@@ -7,7 +7,7 @@ particle::particle(float x, float y){
 
     xVelocity = (float)((rand() % 10) - 5)/50.0;
     yVelocity = (float)((rand() % 10) - 5)/50.0;
-    zVelocity = (float)((rand() % 10) - 5)/50.0;
+    zVelocity = (float)((rand() % 10) - 5)/30.0;
     
     rotationVelocity = (float)(rand() % 10)/5.0;
     rotationVelocity *= 3.0f;

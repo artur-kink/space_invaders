@@ -9,6 +9,7 @@ class enemy:public ship{
 public:
 
 	Timer animationTimer;
+    Timer deathTimer;
 	bool frame;
 
     float dir;
@@ -16,6 +17,9 @@ public:
 
     //Enemy color.
     color c;
+
+    bool beenHit;
+    float scale;
 
     float velocity;
 
@@ -39,6 +43,8 @@ public:
     void drawEnemy5B();
     void drawEnemy6B();
     virtual void draw();
+
+    void hit();
 };
 
 #endif
