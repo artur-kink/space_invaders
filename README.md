@@ -4,9 +4,13 @@ space_invaders
 The project is a 3d clone of space invaders. It uses cubes to draw the
 sprites.
 
-Keyboard input is implemented through glut keyboard handlers.
+Keyboard input is implemented through glut keyboard handlers. The controls
+are: w - shoot
+     a - move left
+     d - move right
 
-Text is drawing using glut's glutStrokeString.
+Text is drawn using glut's glutStrokeString. We use this for the score,
+game over screen, and start screen.
 
 File Structure
 ==============
