@@ -3,6 +3,7 @@
 
 #include "ship.hpp"
 
+//Player class.
 class player:public ship{
 public:
     player();

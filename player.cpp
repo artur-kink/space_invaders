@@ -8,6 +8,7 @@ player::player(){
     h = 2;
 }
 
+//Draw player ship.
 void player::draw(){
     glPushMatrix();
 		glTranslatef(x, y + 14 / 5.0, 0);

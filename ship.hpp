@@ -4,11 +4,14 @@
 #include "draw.hpp"
 #include "bullet.hpp"
 
+//Base ship class
 class ship{
 public:
+    //Position
     float x;
     float y;
 
+    //Width and height
     float w;
     float h;
 

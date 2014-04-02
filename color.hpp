@@ -1,8 +1,10 @@
 #ifndef _COLOR_
 #define _COLOR_
 
+//Color container.
 class color{
 public:
+    //RGB values.
     float r, g, b;
 
     color();
@@ -10,6 +12,7 @@ public:
     color(const color& c);
 };
 
+//Const color definitions.
 static color white(1.0, 1.0, 1.0);
 static color magenta(1.0, 0, 1.0);
 static color blue(0.0, 42.0/255.0, 1.0);

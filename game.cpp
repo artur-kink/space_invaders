@@ -34,24 +34,27 @@ game::game(){
 
     score = 0;
     level = 0;
-    
+
+    //Initialize particles.
     particlesSize = 100;
     particles = new particle*[particlesSize];
     memset(particles, 0, sizeof(particle*)*particlesSize);
 
+    //Initialize bullets.
     bulletsSize = 55;
     bullets = new bullet*[bulletsSize];
     memset(bullets, 0, sizeof(bullet*)*bulletsSize);
 
+    //Set beginning level.
     enemies = 0;
     setLevel(0);
     
     int argc = 0;
     glutInit(&argc, 0);
-    // Set video mode: double-buffered, color, depth-buffered
+    //Set video mode: double-buffered, color, depth-buffered
     glutInitDisplayMode (GLUT_DOUBLE | GLUT_RGB | GLUT_DEPTH);
 
-    // Create window
+    //Create window
     glutInitWindowPosition (0, 0);
     glutInitWindowSize(Win[0],Win[1]);
     windowID = glutCreateWindow("Space Invaders");
@@ -59,17 +62,15 @@ game::game(){
 
     GLUI_Master.set_glutIdleFunc(display);
 
-    // Setup callback functions to handle events
-    glutReshapeFunc(reshape);	// Call reshape whenever window resized
+    //Setup callback functions to handle events
+    glutReshapeFunc(reshape);
     glutDisplayFunc(display);
     glutKeyboardFunc(keyboardDown);
     glutKeyboardUpFunc(keyboardUp);
-
-    glClearColor(0.0f,0.0f,0.0f,1.0f);
 }
 
 void game::run(){
-    //Start glut main loop.
+    //Start glut loop.
     glutMainLoop();
 }
 
@@ -89,10 +90,10 @@ void game::reshape(int w, int h)
        (GLdouble)instance->Win[0]/(GLdouble)instance->Win[1], instance->NEAR_CLIP, instance->FAR_CLIP);
 }
 
-// display callback
+//Display callback.
 void game::display(void)
 {
-    //Draw and update 60 times a second.
+    //Draw and update game 60 times a second.
     if(instance->frameRateTimer.elapsed() > 1.0/60.0){
         instance->frameRateTimer.reset();
         instance->update();
@@ -100,10 +101,11 @@ void game::display(void)
     }
 }
 
+//Game state update.
 void game::update(){
 
     if(screen == START){
-        
+        //Nothing special for start.
     }else if(screen == GAME){
         //Update player position if moving.
         if(leftDown && p.x > -37)
@@ -146,6 +148,7 @@ void game::update(){
             }
         }
 
+        //If all enemies dead move to next level.
         if(allDead){
             setLevel(level+1);
         }
@@ -216,6 +219,7 @@ void game::update(){
         }
     }
 
+    //Process any enemy deaths.
     for(int i = 0; i < enemiesSize; i++){
         if(enemies[i]){
             if(enemies[i]->beenHit && enemies[i]->deathTimer.elapsed() > 0.15){
@@ -238,8 +242,8 @@ void game::update(){
             }
         }
     }
-    
 
+    //Update particles.
     for(int i = 0; i < particlesSize; i++){
         if(particles[i]){
             particles[i]->update();
@@ -251,6 +255,7 @@ void game::update(){
     }
 }
 
+//Set game screen.
 void game::setScreen(int s){
     if(sceneTimer.elapsed() > 0.5){
         screen = s;
@@ -258,6 +263,7 @@ void game::setScreen(int s){
     }
 }
 
+//Set game level.
 void game::setLevel(int l){
     level = l;
 
@@ -267,6 +273,7 @@ void game::setLevel(int l){
         score = 0;
     }
 
+    //Destroy all levels.
     for(int i = 0; i < bulletsSize; i++){
         if(bullets[i]){
             delete bullets[i];
@@ -274,6 +281,7 @@ void game::setLevel(int l){
         }
     }
 
+    //Initialize enemies.
     enemiesSize = 70 + l*10;
     if(enemies){
         delete enemies;
@@ -287,6 +295,7 @@ void game::setLevel(int l){
         if(((i*7)/70)%2 == 1)
             enemies[i]->dir = -1;
 
+        //Set enemy colors based on row.
         if(((i*7)/70)%10 == 1){
             enemies[i]->c = blue;
         }else if(((i*7)/70)%10 == 2){
@@ -309,6 +318,7 @@ void game::setLevel(int l){
     }
 }
 
+//Draw game state.
 void game::draw(){
 
     //Reset draw settings.
@@ -395,22 +405,26 @@ void game::draw(){
 
 
 	glPushMatrix();
+        //Draw player.
         if(screen != GAME_OVER){
             p.draw();
         }
-        
+
+        //Draw enemies.
         for(int i = 0; i < enemiesSize; i++){
             if(enemies[i]){
                 enemies[i]->draw();
             }
         }
 
+        //Draw bullets.
         for(int i = 0; i < bulletsSize; i++){
             if(bullets[i]){
                 bullets[i]->draw();
             }
         }
 
+        //Draw particles.
         for(int i = 0; i < particlesSize; i++){
             if(particles[i]){
                 particles[i]->draw();
@@ -425,6 +439,7 @@ void game::draw(){
     glDisable(GL_COLOR_MATERIAL);
 
     if(screen == START){
+    //Draw start game.
     glPushMatrix();
         glColor3f(1.0f, 1.0f, 1.0f);
         glTranslatef(-20, 0, 5);
@@ -433,6 +448,7 @@ void game::draw(){
         draw::text((unsigned char*)"START GAME");
     glPopMatrix();
     }else if(screen == GAME_OVER){
+    //Draw game over.
     glPushMatrix();
         glColor3f(1.0f, 1.0f, 1.0f);
         glTranslatef(-19, 0, 5);
@@ -441,6 +457,7 @@ void game::draw(){
         draw::text((unsigned char*)"GAME OVER");
     glPopMatrix();
     }else if(screen == LEVEL){
+    //Draw level number.
     glPushMatrix();
         glColor3f(1.0f, 1.0f, 1.0f);
         glTranslatef(-14, 0, 5);
@@ -454,6 +471,7 @@ void game::draw(){
     glPopMatrix();
     }
 
+    //Draw score.
     if(screen == GAME || screen == LEVEL || screen == GAME_OVER){
     glPushMatrix();
         glColor3f(1.0f, 1.0f, 1.0f);
@@ -468,11 +486,11 @@ void game::draw(){
     glPopMatrix();
     }
 
-    
     glFlush();
     glutSwapBuffers();
 }
 
+//Keyboard key released handler.
 void game::keyboardUp(unsigned char key, int x, int y){
     if(key == 'a'){
         instance->leftDown = false;
@@ -483,6 +501,7 @@ void game::keyboardUp(unsigned char key, int x, int y){
     }
 }
 
+//Keyboard key pressed handler.
 void game::keyboardDown(unsigned char key, int x, int y){
     if(instance->screen == START){
         instance->setScreen(game::GAME);

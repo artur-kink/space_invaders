@@ -5,16 +5,23 @@
 #include <GL/glu.h>
 #include <GL/freeglut.h>
 
+//Drawing handler.
 class draw{
 public:    
-    // Draw a unit cube, centered at the current location
+    //Draw unit cube.
     static void cube();
 
-    //Draw cylinder with given radius r and length in z.
+    //Draw cylinder.
+    //r radius of cylinder.
+    //zDepth depth.
     static void cylinder(float r, float zDepth);
 
+    //Draw sphere.
+    //r radius.
     static void sphere(float r);
 
+    //Draw text
+    //string to draw.
     static void text(const unsigned char* string);
 };
 
