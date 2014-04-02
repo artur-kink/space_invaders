@@ -48,13 +48,13 @@ void enemy::draw(){
     if(y > 28)
         return;
 
-	if(animationTimer.elapsed() > 0.4){
-		animationTimer.reset();
-		frame = !frame;
-	}
-
     if(beenHit){
-        scale = (1 - deathTimer.elapsed());
+        scale = (0.15 - deathTimer.elapsed())/0.15;
+    }else{
+        if(animationTimer.elapsed() > 0.4){
+            animationTimer.reset();
+            frame = !frame;
+        }
     }
 
     glPushMatrix();

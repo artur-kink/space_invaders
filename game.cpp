@@ -112,7 +112,7 @@ void game::update(){
             p.x += 1.0f;
 
         //Player shoot
-        if(shootDown && shootTimer.elapsed() > 1.0/2.0){
+        if(shootDown && shootTimer.elapsed() > 1.0/2.5){
             for(int i = 0; i < bulletsSize; i++){
                 if(bullets[i] == 0){
                     shootTimer.reset();
@@ -130,27 +130,11 @@ void game::update(){
                 allDead = false;
                 enemies[i]->update();
 
-                if(enemies[i]->beenHit && enemies[i]->deathTimer.elapsed() > 1){
-                    //Spawn explosion particles
-                    int spawned = 0;
-                    for(int p = 0; p < particlesSize; p++){
-                        if(particles[p] == 0){
-                            particles[p] = new particle(enemies[i]->x, enemies[i]->y);
-                            spawned++;
-                            if(spawned > 10){
-                                break;
-                            }
-                        }
-                    }
-                    
-                    delete enemies[i];
-                    enemies[i] = 0;
-                    
-                    continue;
-                }
+                if(enemies[i]->y <= p.y + p.h)
+                    setScreen(GAME_OVER);
 
                 //Shoot
-                if(rand()%1200 <= level){
+                if((float)rand()/(float)0xFFFFFFFF <= 0.0003*(level+1)){
                     for(int b = 0; b < bulletsSize; b++){
                         if(bullets[b] == 0){
                             bullets[b] = new bullet(enemies[i]->x, enemies[i]->y, -1.0);
@@ -230,7 +214,31 @@ void game::update(){
             }
         }
     }
+
+    for(int i = 0; i < enemiesSize; i++){
+        if(enemies[i]){
+            if(enemies[i]->beenHit && enemies[i]->deathTimer.elapsed() > 0.15){
+                //Spawn explosion particles
+                int spawned = 0;
+                for(int p = 0; p < particlesSize; p++){
+                    if(particles[p] == 0){
+                        particles[p] = new particle(enemies[i]->x, enemies[i]->y);
+                        spawned++;
+                        if(spawned > 10){
+                            break;
+                        }
+                    }
+                }
+
+                delete enemies[i];
+                enemies[i] = 0;
+
+                continue;
+            }
+        }
+    }
     
+
     for(int i = 0; i < particlesSize; i++){
         if(particles[i]){
             particles[i]->update();
@@ -265,7 +273,7 @@ void game::setLevel(int l){
         }
     }
 
-    enemiesSize = 105 + l*10;
+    enemiesSize = 70 + l*10;
     if(enemies){
         delete enemies;
     }
@@ -273,28 +281,28 @@ void game::setLevel(int l){
     enemies = new enemy*[enemiesSize];
 
     for(int i = 0; i < enemiesSize; i++){
-        enemies[i] = new enemy(-37 + (i*6)%70, 10 + ((i*6)/70)*3, ((i*6)/70)%6, level);
+        enemies[i] = new enemy(-32 + (i*7)%70, 10 + ((i*7)/70)*3, ((i*7)/70)%6, level);
 
-        if(((i*6)/70)%2 == 1)
+        if(((i*7)/70)%2 == 1)
             enemies[i]->dir = -1;
 
-        if(((i*6)/70)%10 == 1){
+        if(((i*7)/70)%10 == 1){
             enemies[i]->c = blue;
-        }else if(((i*6)/70)%10 == 2){
+        }else if(((i*7)/70)%10 == 2){
             enemies[i]->c = teal;
-        }else if(((i*6)/70)%9 == 3){
+        }else if(((i*7)/70)%9 == 3){
             enemies[i]->c = green;
-        }else if(((i*6)/70)%10 == 4){
+        }else if(((i*7)/70)%10 == 4){
             enemies[i]->c = lime;
-        }else if(((i*6)/70)%10 == 5){
+        }else if(((i*7)/70)%10 == 5){
             enemies[i]->c = yellow;
-        }else if(((i*6)/70)%10 == 6){
+        }else if(((i*7)/70)%10 == 6){
             enemies[i]->c = brown;
-        }else if(((i*6)/70)%10 == 7){
+        }else if(((i*7)/70)%10 == 7){
             enemies[i]->c = orange;
-        }else if(((i*6)/70)%10 == 8){
+        }else if(((i*7)/70)%10 == 8){
             enemies[i]->c = red;
-        }else if(((i*6)/70)%10 == 9){
+        }else if(((i*7)/70)%10 == 9){
             enemies[i]->c = purple;
         }
     }
@@ -465,16 +473,12 @@ void game::draw(){
 }
 
 void game::keyboardUp(unsigned char key, int x, int y){
-    switch(key){
-        case 'a':
-            instance->leftDown = false;
-            break;
-        case 'd':
-            instance->rightDown = false;
-            break;
-        case 'w':
-            instance->shootDown = false;
-            break;
+    if(key == 'a'){
+        instance->leftDown = false;
+    }else if(key == 'd'){
+        instance->rightDown = false;
+    }else if(key == 'w' || key == ' '){
+        instance->shootDown = false;
     }
 }
 
@@ -487,16 +491,12 @@ void game::keyboardDown(unsigned char key, int x, int y){
     }else if(instance->screen == LEVEL){
         instance->setScreen(game::GAME);
     }else{
-        switch(key){
-            case 'a':
-                instance->leftDown = true;
-                break;
-            case 'd':
-                instance->rightDown = true;
-                break;
-            case 'w':
-                instance->shootDown = true;
-                break;
+        if(key == 'a'){
+            instance->leftDown = true;
+        }else if(key == 'd'){
+            instance->rightDown = true;
+        }else if(key == 'w' || key == ' '){
+            instance->shootDown = true;
         }
     }
 }
